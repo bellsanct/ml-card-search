@@ -23,7 +23,7 @@ for($count = 0; $count < count($files); $count++) {
   imagefilter ( $canvas , IMG_FILTER_BRIGHTNESS , 20 );
   imagefilter ( $canvas , IMG_FILTER_CONTRAST , -255 );
 
-  $resize_path = ('./results/' . $w . "x" . $h . basename($target_file));
+  $resize_path = ('./results/' . $w . "x" . $h . "_" . basename($target_file));
   imagepng($canvas, $resize_path);
 
   //画像データ符号化

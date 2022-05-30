@@ -35,7 +35,7 @@ for($count = 0; $count < count($files); $count++) {
       $colors = imagecolorsforindex($canvas, $rgb);
 
       //隣接画素取得
-      if($countX > 0 && $count < $w) {
+      if($countX > 0 && $countX < $w) {
         $rgb_left = imagecolorat($image, $countX - 1, $countY);
         $colors_left = imagecolorsforindex($image, $rgb_left);
         $rgb_right = imagecolorat($image, $countX + 1, $countY);

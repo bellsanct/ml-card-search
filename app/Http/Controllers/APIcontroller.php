@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class APIcontroller extends Controller
 {
@@ -14,12 +15,18 @@ class APIcontroller extends Controller
 
     //$search_bits = Storage::disk('public')->get('outputs/037nao0184_0_b.txt');
     $directory_path = 'cache';
-    //$request->file('card_img')->store('public/' . $directory_path); 
-    $request->file('card_img')->url(); 
-    echo $request;
+    $request->file('card_img')->storeAs('public/' . $directory_path , 'cache_img.png'); 
+
+    $image_path = Storage::url('public/cache/cache_img.png');
+
+    $image = imagecreatefrompng("." . $image_path);
+    //return response($image_file, 200)->header('Content-Type', 'image/png');
+    //$image = imagecreatefrompng($image_file);
+
+    //Storage::delete('public/cache/cache_img.png');
+
     // $image
     $canvas = imagecreatetruecolor($w, $h);
-
     imagecopyresampled($canvas, $image, 0, 0, 0, 0, $w, $h, 640, 800);
 
     imagefilter ( $canvas , IMG_FILTER_EDGEDETECT );
@@ -28,31 +35,19 @@ class APIcontroller extends Controller
     imagefilter ( $canvas , IMG_FILTER_BRIGHTNESS , 20 );
     imagefilter ( $canvas , IMG_FILTER_CONTRAST , -255 );
 
+    $resize_path = (storage_path('app/public/cache/') . $w . "x" . $h . "_cache_img.png");
     imagepng($canvas, $resize_path);
+    Storage::delete('public/cache/cache_img.png');
 
+    $search_bits = "";
     //画像データ符号化
+    //
     for($countY = 0 ; $countY < $h ; $countY++) {
       for($countX = 0 ; $countX < $w ; $countX++) {
 
         //座標の色取得
         $rgb = imagecolorat($canvas, $countX, $countY);
         $colors = imagecolorsforindex($canvas, $rgb);
-
-        //隣接画素取得
-        if($countX > 0 && $count < $w) {
-          $rgb_left = imagecolorat($image, $countX - 1, $countY);
-          $colors_left = imagecolorsforindex($image, $rgb_left);
-          $rgb_right = imagecolorat($image, $countX + 1, $countY);
-          $colors_right = imagecolorsforindex($image, $rgb_right);
-        } else {
-          $rgb_left = imagecolorat($image, 0, $countY);
-          $colors_left = imagecolorsforindex($image, $rgb_left);
-          $rgb_right = imagecolorat($image, 0, $countY);
-          $colors_right = imagecolorsforindex($image, $rgb_right);
-        }
-
-        //ファイルに書き込むビット列
-        $search_bits = "";
 
         if($rgb != 0) {
           $search_bits = $search_bits . "1";
@@ -61,11 +56,11 @@ class APIcontroller extends Controller
         }
       }
     }
-    echo $search_bits;
 
+    Storage::delete('public/cache/4x5_cache_img.png');
     $array_search_bits = str_split($search_bits);
 
-    $files = glob("./outputs/*.txt");
+    $files = glob(storage_path('app/public/outputs/') . "*.txt");
     for($count = 0; $count < count($files); $count++) {
       $target_file = $files[$count];
       $target_bits = file_get_contents($target_file);
@@ -84,7 +79,7 @@ class APIcontroller extends Controller
       }
       if($parity == 0) {
         //$array_results += array("image_id" => basename($target_file, ".txt"), "parity" => $parity);
-        //echo $search_bits . " and " . $target_bits . " parity is " . $parity . "\n";
+        //echo $search_bits . " and " . basename($target_file, ".txt") . " parity is " . $parity . "\n";
         echo basename($target_file, ".txt");
       }
     }

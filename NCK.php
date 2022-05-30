@@ -13,13 +13,6 @@ for($count = 0; $count < count($files); $count++) {
 
   echo basename($target_file) . "\n";
 
- /* 
-  imagefilter ( $image , IMG_FILTER_EDGEDETECT );
-  imagefilter ( $image , IMG_FILTER_GRAYSCALE );
-  imagefilter ( $image , IMG_FILTER_SMOOTH , 8 );
-  imagefilter ( $image , IMG_FILTER_BRIGHTNESS , 20 );
-  imagefilter ( $image , IMG_FILTER_CONTRAST , -255 );
- */
   //新しく描画するキャンパス
   $canvas = imagecreatetruecolor($w, $h);
   imagecopyresampled($canvas, $image, 0, 0, 0, 0, $w, $h, 640, 800);
@@ -63,10 +56,10 @@ for($count = 0; $count < count($files); $count++) {
         $string = $string . "0";
       }
 
-      file_put_contents("./outputs/" . basename($target_file) ."_.txt", $string , FILE_APPEND); 
+      file_put_contents("./outputs/" . basename($target_file , ".png") .".txt", $string , FILE_APPEND); 
     }
   }
-  echo basename($target_file) . " -> " . basename($target_file) . "_.txt" . "\n";
+  echo basename($target_file) . " -> " . basename($target_file, ".png") . ".txt" . "\n";
   //画像の破棄
   imagedestroy($image);
   imagedestroy($canvas);

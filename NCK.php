@@ -1,7 +1,7 @@
 <?php
 //リサイズサイズ
-$h = 10;
-$w = 8;
+$h = 5;
+$w = 4;
 
 $files = glob("./images/*.png");
 

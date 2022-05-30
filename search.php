@@ -1,6 +1,5 @@
 <?php
-//$search_target = './outputs/037nao0074_0_b.txt';
-$search_target = './outputs/017kth0243_1_b.txt';
+$search_target = './outputs/037nao0074_0_b.txt';
 
 $search_file = fopen($search_target, 'r'); 
 $array_results = array();
@@ -26,7 +25,7 @@ for($count = 0; $count < count($files); $count++) {
 
   $parity = 0;
 
-  for($strcount = 0 ; $strcount < 80 ; $strcount++) {
+  for($strcount = 0 ; $strcount < 20 ; $strcount++) {
     //echo $search_bits[$strcount] . " " . $target_bits[$strcount] . "\n"; 
     if($search_bits[$strcount] xor $target_bits[$strcount]) {
       //echo $search_bits[$strcount] . " XOR " . $target_bits[$strcount] . " is TRUE" . "\n";

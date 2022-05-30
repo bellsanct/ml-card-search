@@ -1,7 +1,7 @@
 <?php
 //リサイズサイズ
-$h = 5;
-$w = 4;
+$h = 10;
+$w = 8;
 
 $files = glob("./images/*.png");
 
@@ -23,7 +23,7 @@ for($count = 0; $count < count($files); $count++) {
   imagefilter ( $canvas , IMG_FILTER_BRIGHTNESS , 20 );
   imagefilter ( $canvas , IMG_FILTER_CONTRAST , -255 );
 
-  $resize_path = ('./results/4x5_' . basename($target_file));
+  $resize_path = ('./results/' . $w . "x" . $h . basename($target_file));
   imagepng($canvas, $resize_path);
 
   //画像データ符号化

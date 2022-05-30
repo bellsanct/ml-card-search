@@ -11,7 +11,7 @@ for($count = 0; $count < count($files); $count++) {
   $file = file_get_contents($target_file);
   $image = imagecreatefrompng($target_file);
 
-  echo basename($target_file) . "\n";
+  echo "Converting " . basename($target_file) . "..." . "\n";
 
   //新しく描画するキャンパス
   $canvas = imagecreatetruecolor($w, $h);

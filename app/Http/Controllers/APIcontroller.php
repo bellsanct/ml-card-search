@@ -77,10 +77,11 @@ class APIcontroller extends Controller
           //echo $search_bits[$strcount] . " XOR " . $target_bits[$strcount] . " is FALSE" . "\n";
         }
       }
-      if($parity == 0) {
+      if($parity < 4) {
         //$array_results += array("image_id" => basename($target_file, ".txt"), "parity" => $parity);
-        //echo $search_bits . " and " . basename($target_file, ".txt") . " parity is " . $parity . "\n";
-        echo basename($target_file, ".txt");
+        echo $search_bits . " and " . basename($target_file, ".txt") . " parity is " . $parity . "\n";
+        echo "\n";
+        //echo basename($target_file, ".txt");
       }
     }
     return;
